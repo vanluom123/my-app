@@ -53,50 +53,45 @@ export default function ProductCard({ product }: ProductCardProps) {
   };
 
   return (
-    <div className="border rounded-lg p-4">
-      <Image 
-        src={product.image} 
-        alt={product.title}
-        width={300}
-        height={300}
-        className="w-full h-48 object-contain mb-4"
-        priority={false}
-        quality={75}
-        loading="lazy"
-        placeholder="blur"
-        blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRg..."
-      />
-      <h2 className="text-lg font-semibold mb-2">{product.title}</h2>
-      <p className="text-gray-600 mb-2">${product.price}</p>
-      <p className="text-sm text-gray-500 mb-4">{product.category}</p>
+    <div className="group relative bg-white rounded-lg border border-gray-200 hover:shadow-md transition-all duration-300">
+      <div className="aspect-[4/3] w-full overflow-hidden">
+        <Image 
+          src={product.image} 
+          alt={product.title}
+          width={240}
+          height={180}
+          className="w-full h-full object-contain p-4 group-hover:scale-105 transition-transform duration-300"
+          priority={false}
+          quality={85}
+          loading="lazy"
+          blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRg..."
+          placeholder="blur"
+        />
+      </div>
       
-      <button
-        onClick={handleSaveClick}
-        className={`flex items-center gap-2 px-4 py-2 rounded-full border transition-colors
-          ${isSaved 
-            ? 'bg-blue-500 text-white border-blue-500 hover:bg-blue-600' 
-            : 'border-gray-300 hover:bg-gray-50'
-          }`}
-      >
-        {isSaved ? (
-          <>
-            <MdBookmark size={20} />
-            <span>Đã lưu</span>
-          </>
-        ) : (
-          <>
-            <MdBookmarkBorder size={20} />
-            <span>Lưu</span>
-          </>
-        )}
-      </button>
-
-      <SaveProductModal
-        isOpen={isSaveModalOpen}
-        onClose={() => setIsSaveModalOpen(false)}
-        productId={product.id}
-        onSaveComplete={onSaveComplete}
-      />
+      <div className="p-4">
+        <p className="text-xs font-medium text-blue-600 uppercase tracking-wide mb-1">
+          {product.category}
+        </p>
+        <h2 className="font-medium text-gray-900 text-sm leading-snug mb-2 line-clamp-2 font-sans">
+          {product.title}
+        </h2>
+        <div className="flex items-center justify-between mt-auto">
+          <p className="text-base font-bold text-gray-900">
+            ${typeof product.price === 'number' ? product.price.toFixed(2) : product.price}
+          </p>
+          <button
+            onClick={handleSaveClick}
+            className={`p-1.5 rounded-full transition-colors
+              ${isSaved 
+                ? 'bg-blue-500 text-white' 
+                : 'bg-gray-100 hover:bg-gray-200 text-gray-600'
+              }`}
+          >
+            {isSaved ? <MdBookmark size={16} /> : <MdBookmarkBorder size={16} />}
+          </button>
+        </div>
+      </div>
     </div>
   );
 } 

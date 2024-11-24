@@ -33,38 +33,37 @@ export default function CollectionsPage() {
 
   return (
     <div className="container mx-auto px-4 py-8">
-      <h1 className="text-2xl font-bold mb-6">Bộ sưu tập của tôi</h1>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <h1 className="text-2xl font-bold text-gray-900 mb-8">Bộ sưu tập của tôi</h1>
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {collections.map(collection => (
-          <div key={collection.id} className="border rounded-lg p-4">
-            <Link href={`/collections/${collection.id}`}>
-              <h2 className="text-lg font-semibold mb-4">{collection.name}</h2>
-              <div className="grid grid-cols-2 gap-4">
-                {collection.products.map(productId => {
+          <Link 
+            href={`/collections/${collection.id}`}
+            key={collection.id} 
+            className="block group"
+          >
+            <div className="border rounded-lg p-4 hover:shadow-lg transition-all duration-300">
+              <h2 className="text-lg font-semibold text-gray-900 mb-4">{collection.name}</h2>
+              <div className="grid grid-cols-2 gap-3">
+                {collection.products.slice(0, 4).map(productId => {
                   const product = products[productId];
                   if (!product) return null;
 
                   return (
-                    <div key={productId} className="border rounded p-2">
+                    <div key={productId} className="aspect-square overflow-hidden rounded border bg-white">
                       <Image
                         src={product.image}
                         alt={product.title}
-                        width={300}
-                        height={300}
-                        className="w-full h-24 object-contain mb-2"
-                        priority={false}
-                        quality={75}
+                        width={150}
+                        height={150}
+                        className="w-full h-full object-contain p-2"
                         loading="lazy"
-                        placeholder="blur"
-                        blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRg..."
                       />
-                      <p className="text-sm truncate">{product.title}</p>
                     </div>
                   );
                 })}
               </div>
-            </Link>
-          </div>
+            </div>
+          </Link>
         ))}
       </div>
     </div>
